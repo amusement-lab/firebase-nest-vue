@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: pg_container
+    image: postgres:15.1-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: evisapass
+      POSTGRES_DB: evisadb
+    volumes:
+      - './tmp/db:/var/lib/postgresql/data'
+    ports:
+      - '5678:5432'
+
+  adminer:
+    container_name: adminer_container
+    depends_on:
+      - db
+    image: adminer
+    restart: always
+    ports:
+      - '8989:8080'
