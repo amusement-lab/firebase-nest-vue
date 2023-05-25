@@ -1,11 +1,38 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { getUser } from "./libs/firebase";
 
 import Home from "./pages/Home.vue";
 import Login from "./pages/Login.vue";
 
 const routes = [
-  { path: "/", component: Home },
-  { path: "/login", component: Login },
+  {
+    path: "/",
+    name: "home",
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      getUser((user) => {
+        if (user === null) {
+          next({ name: "login" });
+        } else {
+          next();
+        }
+      });
+    },
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      getUser((user) => {
+        if (user) {
+          next({ name: "home" });
+        } else {
+          next();
+        }
+      });
+    },
+  },
 ];
 
 const router = createRouter({

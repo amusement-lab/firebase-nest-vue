@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
+  getRedirectResult,
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
@@ -22,30 +23,13 @@ provider.addScope("openid");
 // Method list
 const login = () => signInWithRedirect(auth, provider);
 
-const getTokenAndRedirect = (cbRedirect) =>
+const getUser = (cb) =>
   onAuthStateChanged(auth, (user) => {
-    console.log(user);
-    user
-      .getIdToken()
-      .then((token) => {
-        cbRedirect();
-      })
-      .catch((err) => {
-        console.log({ messange: "No user login" });
-      });
+    cb(user);
   });
 
-const getToken = async () => {
-  const user = auth.currentUser;
-  if (user) {
-    return await user.getIdToken();
-  } else {
-    return null;
-  }
-};
-
 const logout = (cbRedirect) => {
-  signOut(auth)
+  return signOut(auth)
     .then(() => {
       cbRedirect();
     })
@@ -54,4 +38,12 @@ const logout = (cbRedirect) => {
     });
 };
 
-export { login, getTokenAndRedirect, getToken, logout };
+const redirectResult = (cbRedirect) => {
+  getRedirectResult(auth).then((result) => {
+    if (result) {
+      cbRedirect();
+    }
+  });
+};
+
+export { login, getUser, logout, redirectResult };
