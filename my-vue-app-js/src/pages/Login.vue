@@ -1,8 +1,6 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
-
-import { login, getUser, redirectResult } from "../libs/firebase";
 
 const router = useRouter();
 
@@ -10,14 +8,8 @@ const loadingStatus = ref(false);
 
 async function handleLogin() {
   loadingStatus.value = true;
-  login();
+  router.push("/login-after");
 }
-
-onMounted(() => {
-  redirectResult(() => {
-    router.push("/");
-  });
-});
 </script>
 
 <template>

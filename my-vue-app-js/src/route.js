@@ -3,6 +3,7 @@ import { getUser } from "./libs/firebase";
 
 import Home from "./pages/Home.vue";
 import Login from "./pages/Login.vue";
+import LoginAfter from "./pages/LoginAfter.vue";
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
         }
       });
     },
+  },
+  {
+    path: "/login-after",
+    name: "login after",
+    component: LoginAfter,
   },
 ];
 
