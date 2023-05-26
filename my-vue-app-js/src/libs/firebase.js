@@ -23,27 +23,23 @@ provider.addScope("openid");
 // Method list
 const login = () => signInWithRedirect(auth, provider);
 
-const getUser = (cb) =>
+const getLoginUser = (cb = () => {}) =>
   onAuthStateChanged(auth, (user) => {
     cb(user);
   });
 
-const logout = (cbRedirect) => {
-  return signOut(auth)
-    .then(() => {
-      cbRedirect();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+const logout = (cb = () => {}) => {
+  signOut(auth).then(() => {
+    cb();
+  });
 };
 
 const redirectResult = (cbRedirect) => {
   getRedirectResult(auth).then((result) => {
     if (result) {
-      cbRedirect();
+      cbRedirect(auth);
     }
   });
 };
 
-export { login, getUser, logout, redirectResult };
+export { login, getLoginUser, logout, redirectResult, auth, signOut };

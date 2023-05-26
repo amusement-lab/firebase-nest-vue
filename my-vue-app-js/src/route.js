@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { getUser } from "./libs/firebase";
+
+import HomeLayout from "./layouts/HomeLayout.vue";
+import LoginLayout from "./layouts/LoginLayout.vue";
 
 import Home from "./pages/Home.vue";
 import Login from "./pages/Login.vue";
@@ -8,31 +10,23 @@ import LoginAfter from "./pages/LoginAfter.vue";
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home,
-    beforeEnter: (to, from, next) => {
-      getUser((user) => {
-        if (user === null) {
-          next({ name: "login" });
-        } else {
-          next();
-        }
-      });
-    },
+    component: HomeLayout,
+    children: [
+      {
+        path: "/",
+        component: Home,
+      },
+    ],
   },
   {
     path: "/login",
-    name: "login",
-    component: Login,
-    beforeEnter: (to, from, next) => {
-      getUser((user) => {
-        if (user) {
-          next({ name: "home" });
-        } else {
-          next();
-        }
-      });
-    },
+    component: LoginLayout,
+    children: [
+      {
+        path: "/login",
+        component: Login,
+      },
+    ],
   },
   {
     path: "/login-after",

@@ -2,12 +2,12 @@
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 
-import { login, getUser, redirectResult } from "../libs/firebase";
+import { login, getLoginUser } from "../libs/firebase";
 
 const router = useRouter();
 
 onMounted(() => {
-  getUser((user) => {
+  getLoginUser((user) => {
     if (!user) {
       login();
     } else {
