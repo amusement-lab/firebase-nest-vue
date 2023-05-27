@@ -2,14 +2,16 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { ofetch } from "ofetch";
-import { auth, signOut } from "../libs/firebase";
+import { auth } from "../libs/firebase";
+import { signOut } from "firebase/auth";
 
 const router = useRouter();
 
 async function handleLogout() {
-  signOut(auth).then(() => {
-    router.push("/login");
-  });
+  // signOut(auth).then(() => {
+  //   router.push("/login");
+  // });
+  signOut(auth);
 }
 
 function toLogin() {

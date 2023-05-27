@@ -5,13 +5,13 @@ import { getLoginUser } from "../libs/firebase";
 
 const router = useRouter();
 
-getLoginUser((user) => {
-  if (!user) {
-    router.push("/login");
-  } else {
-    router.push("/");
-  }
-});
+// getLoginUser((user) => {
+//   if (!user) {
+//     router.push("/login");
+//   } else {
+//     router.push("/");
+//   }
+// });
 </script>
 
 <template>

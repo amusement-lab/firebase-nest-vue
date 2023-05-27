@@ -1,17 +1,17 @@
 <script setup>
 import { ref } from "vue";
 import { RouterView, useRouter } from "vue-router";
-import { getLoginUser } from "../libs/firebase";
+import { getLoginUser, auth } from "../libs/firebase";
 
 const router = useRouter();
 
-const loginStatus = ref(false);
+const loginStatus = ref(!!auth.currentUser);
 
 getLoginUser((user) => {
   if (user) {
     loginStatus.value = true;
   } else {
-    router.push("/login");
+    // router.push("/login");
   }
 });
 </script>

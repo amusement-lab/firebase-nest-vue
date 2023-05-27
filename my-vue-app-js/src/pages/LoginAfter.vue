@@ -9,7 +9,7 @@ const router = useRouter();
 onMounted(() => {
   getLoginUser((user) => {
     if (!user) {
-      login();
+      // login();
     } else {
       router.push("/");
     }
