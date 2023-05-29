@@ -1,17 +1,16 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ofetch } from "ofetch";
-import { auth } from "../libs/firebase";
 import { signOut } from "firebase/auth";
+
+import { auth } from "../libs/firebase";
 
 const router = useRouter();
 
 async function handleLogout() {
-  // signOut(auth).then(() => {
-  //   router.push("/login");
-  // });
-  signOut(auth);
+  await signOut(auth);
+  router.push("/login");
 }
 
 function toLogin() {
@@ -31,15 +30,26 @@ async function getData() {
   });
   myData.value = jsonData;
 }
-getData();
+
+onMounted(() => {
+  getData();
+});
 </script>
 
 <template>
   <p>Home Page</p>
-  <!-- <img :src="myData.picture" width="50" height="50" style="object-fit: cover" /> -->
+  <img
+    v-if="myData.picture"
+    :src="myData.picture"
+    referrerpolicy="no-referrer"
+    width="50"
+    height="50"
+    style="object-fit: cover"
+  />
   <p>Name: {{ myData.name }}</p>
   <p>Email: {{ myData.email }}</p>
   <p v-if="token">Client Token: {{ token }}</p>
+
   <button @click="toLogin">To Login Page</button>
   <button @click="getIdToken">Client Token</button>
   <button @click="handleLogout">Logout</button>

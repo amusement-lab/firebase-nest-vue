@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeLayout from "./layouts/HomeLayout.vue";
-import LoginLayout from "./layouts/LoginLayout.vue";
+import LoginLayout from "./layouts/LoginLayout.vue"
 
 import Home from "./pages/Home.vue";
 import Login from "./pages/Login.vue";
-import LoginAfter from "./pages/LoginAfter.vue";
 
 const routes = [
   {
@@ -26,12 +25,7 @@ const routes = [
         path: "/login",
         component: Login,
       },
-    ],
-  },
-  {
-    path: "/login-after",
-    name: "login after",
-    component: LoginAfter,
+    ]
   },
 ];
 
