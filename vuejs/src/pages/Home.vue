@@ -31,9 +31,7 @@ async function getData() {
   myData.value = jsonData;
 }
 
-onMounted(() => {
-  getData();
-});
+getData();
 </script>
 
 <template>

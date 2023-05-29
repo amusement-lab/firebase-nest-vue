@@ -10,14 +10,12 @@ const router = useRouter();
 
 const loginStatus = ref(true);
 
-onMounted(() => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      loginStatus.value = false;
-    } else {
-      router.push("/login");
-    }
-  });
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loginStatus.value = false;
+  } else {
+    router.push("/login");
+  }
 });
 </script>
 

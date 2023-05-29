@@ -24,11 +24,7 @@ async function redirectCheck() {
   }
 }
 
-onMounted(() => {
-  redirectCheck();
-});
-
-if (auth.currentUser) router.push("/");
+redirectCheck();
 </script>
 
 <template>
