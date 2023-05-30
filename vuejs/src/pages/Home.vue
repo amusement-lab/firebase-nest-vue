@@ -26,7 +26,9 @@ const myData = ref({ name: "", email: "", picture: "" });
 async function getData() {
   const jsonData = await ofetch("http://localhost:3000/verify/firebase", {
     method: "POST",
-    body: { token: auth.currentUser.accessToken },
+    headers: {
+      Authorization: auth.currentUser.accessToken,
+    },
   });
   myData.value = jsonData;
 }

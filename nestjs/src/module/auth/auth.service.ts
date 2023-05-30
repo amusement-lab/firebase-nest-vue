@@ -6,7 +6,7 @@ import { PrismaService } from '../prisma/prisma.service';
 export class AuthService {
   constructor(private prisma: PrismaService) {}
 
-  async verifyId({ token }: { token: string }): Promise<any> {
+  async verifyId(token: string): Promise<any> {
     return getAuth().verifyIdToken(token);
   }
 }

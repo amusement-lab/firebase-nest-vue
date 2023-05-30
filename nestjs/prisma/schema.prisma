@@ -10,24 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  ADMIN
-}
-
 model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   email     String   @unique
   name      String?
-  role      Role     @default(USER)
+  files     File[]
 }
 
-model Todo {
+model File {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String
-  desc      String
+  name      String
+  url       String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
 }
