@@ -3,10 +3,10 @@ import { getAuth } from 'firebase-admin/auth';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
-export class AuthService {
+export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async verifyId(token: string): Promise<any> {
+  async verifyId(token: string) {
     return getAuth().verifyIdToken(token);
   }
 }

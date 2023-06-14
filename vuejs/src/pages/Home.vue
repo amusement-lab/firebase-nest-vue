@@ -39,8 +39,8 @@ getData();
 <template>
   <p>Home Page</p>
   <img
-    v-if="myData.picture"
-    :src="myData.picture"
+    v-if="myData.photo"
+    :src="myData.photo"
     referrerpolicy="no-referrer"
     width="50"
     height="50"
