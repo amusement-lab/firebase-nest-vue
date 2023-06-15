@@ -4,9 +4,14 @@ import {
   Headers,
   UploadedFile,
   UseInterceptors,
+  Body,
+  UploadedFiles,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  FileInterceptor,
+  FileFieldsInterceptor,
+} from '@nestjs/platform-express';
 import { FileUploadService } from '../upload/upload.service';
 import { Express } from 'express';
 
@@ -28,7 +33,7 @@ export class AuthController {
   }
 
   @Post('/upload')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('image1'))
   async uploadFile(@UploadedFile() file: Express.Multer.File): Promise<any> {
     const uploadedFile = await this.fileUploadService.uploadFile(
       file.buffer,
@@ -36,5 +41,33 @@ export class AuthController {
     );
     // console.log('File has been uploaded,', uploadedFile);
     return { message: 'File has been uploaded', data: uploadedFile };
+  }
+
+  @Post('/uploads')
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'image1', maxCount: 1 },
+      { name: 'image2', maxCount: 1 },
+    ]),
+  )
+  async uploadFiles(
+    @Body() body: any,
+    @UploadedFiles()
+    files: {
+      image1?: Express.Multer.File[];
+      image2?: Express.Multer.File[];
+    },
+  ): Promise<any> {
+    console.log(body, files);
+    const images = [];
+    for (const property in files) {
+      const file = files[property][0];
+      const uploadImage = await this.fileUploadService.uploadFile(
+        file.buffer,
+        file.originalname,
+      );
+      images.push(uploadImage);
+    }
+    return { message: 'File has been uploaded', images };
   }
 }
